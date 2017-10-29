@@ -1,0 +1,13 @@
+var movies = []
+// uloz.to
+
+$('.pg-article .item .name').each((index, value) => {
+  movies.push($(value).text())
+})
+
+  console.log(movies)
+
+
+// piratebay
+// opensubtitles
+//titulky.com
