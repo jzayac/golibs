@@ -19,8 +19,28 @@ var (
 	cyan  = "\x1b[36;1m"
 	def   = "\x1b[0m"
 
-	file = ""
+	app = ""
 )
+
+type Logger struct {
+	namespace string
+}
+
+func (l *Logger) Debug(message, method string) {
+	Debug.Printf("%s%s:%s%s| %s", cyan, l.namespace, method, def, message)
+}
+
+func (l *Logger) Info(message, method string) {
+	Info.Printf("%s%s:%s%s| %s\n", cyan, l.namespace, method, def, message)
+}
+
+func (l *Logger) Warn(message, method string) {
+	Warn.Printf("%s%s:%s%s| %s\n", cyan, l.namespace, method, def, message)
+}
+
+func (l *Logger) Error(message, method string) {
+	Error.Printf("%s%s:%s%s| %s\n", cyan, l.namespace, method, def, message)
+}
 
 const (
 	standardLogFlags = log.Ldate | log.Ltime | log.Lmicroseconds
@@ -50,39 +70,27 @@ func init() {
 	Error = log.New(errorHandle, red+"ERROR:"+def+" ", standardLogFlags)
 }
 
-func SetFile(f string) {
-	file = f
+func SetApp(f string) {
+	app = f
 }
 
-func DebugLog(message string, method string) {
-	Debug.Printf("%s%s:%s%s| %s", cyan, file, method, def, message)
-	// Debug.Printf("%s%s:%s%s| %+v\n", cyan, file, method, def, message)
+func SetLogger(namespaceInput string) Logger {
+	return Logger{namespace: namespaceInput}
 }
 
-func InfoLog(message string, method string) {
-	Info.Printf("%s%s:%s%s| %s\n", cyan, file, method, def, message)
+func DebugLog(message string) {
+	Debug.Printf("%s%s%s| %s", cyan, app, def, message)
+	// Debug.Printf("%s%s:%s%s| %+v\n", cyan, app, message)
 }
 
-func WarnLog(message string, method string) {
-	Warn.Printf("%s%s:%s%s| %s\n", cyan, file, method, def, message)
+func InfoLog(message string) {
+	Info.Printf("%s%s%s| %s\n", cyan, app, def, message)
 }
 
-func ErrorLog(message string, method string) {
-	Error.Printf("%s%s:%s%s| %s\n", cyan, file, method, def, message)
+func WarnLog(message string) {
+	Warn.Printf("%s%s%s| %s\n", cyan, app, def, message)
 }
 
-func D(message string, method string) {
-	DebugLog(message, method)
-}
-
-func I(message string, method string) {
-	InfoLog(message, method)
-}
-
-func W(message string, method string) {
-	WarnLog(message, method)
-}
-
-func E(message string, method string) {
-	WarnLog(message, method)
+func ErrorLog(message string) {
+	Error.Printf("%s%s%s| %s\n", cyan, app, def, message)
 }
