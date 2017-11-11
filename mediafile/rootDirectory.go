@@ -1,7 +1,6 @@
 package mediafile
 
 import (
-	"fmt"
 	"videolib/dirutils"
 )
 
@@ -18,7 +17,6 @@ func (r *RootDirectory) findDirByPathWithDependencies(path string) *Directory {
 	}
 	dirPath := ""
 
-	fmt.Println(path)
 	if dirutils.IsFile(path) {
 		dirPath = dirutils.GetDirPath(path)
 	} else {
@@ -26,7 +24,6 @@ func (r *RootDirectory) findDirByPathWithDependencies(path string) *Directory {
 	}
 
 	if dir, ok := r.DirMap[dirPath]; ok {
-		// dir.Directories = append(dir.Directories, dir)
 		return dir
 	}
 

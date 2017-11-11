@@ -48,7 +48,7 @@ func TestFindDirByPathWithDependeciesDirectoryAddress(t *testing.T) {
 }
 
 func TestReturnNilIfRootIsNotInitialized(t *testing.T) {
-	// test := NewRootDirectory()
+	// rootDir := NewRootDirectory()
 	rootDir := &RootDirectory{}
 
 	// test := &RootDirectory{}
