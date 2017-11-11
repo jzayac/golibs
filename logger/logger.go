@@ -19,7 +19,7 @@ var (
 	cyan  = "\x1b[36;1m"
 	def   = "\x1b[0m"
 
-	app = ""
+	namespace = ""
 )
 
 type Logger struct {
@@ -51,7 +51,7 @@ func init() {
 	infoHandle := os.Stdout
 	warningHandle := os.Stdout
 	errorHandle := os.Stderr
-	if os.Getenv("GO_ENV") == "develop" {
+	if os.Getenv("GO_ENV") == "develop" || os.Getenv("GO_ENV") == "test" {
 		// https://github.com/gopher-net/docker-ovs-plugin/blob/master/ovs/logging.go
 		debugHandle = os.Stdout
 	} else {
@@ -71,7 +71,7 @@ func init() {
 }
 
 func SetApp(f string) {
-	app = f
+	namespace = f
 }
 
 func SetLogger(namespaceInput string) Logger {
@@ -79,18 +79,18 @@ func SetLogger(namespaceInput string) Logger {
 }
 
 func DebugLog(message string) {
-	Debug.Printf("%s%s%s| %s", cyan, app, def, message)
-	// Debug.Printf("%s%s:%s%s| %+v\n", cyan, app, message)
+	Debug.Printf("%s%s%s| %s", cyan, namespace, def, message)
+	// Debug.Printf("%s%s:%s%s| %+v\n", cyan, namespace, message)
 }
 
 func InfoLog(message string) {
-	Info.Printf("%s%s%s| %s\n", cyan, app, def, message)
+	Info.Printf("%s%s%s| %s\n", cyan, namespace, def, message)
 }
 
 func WarnLog(message string) {
-	Warn.Printf("%s%s%s| %s\n", cyan, app, def, message)
+	Warn.Printf("%s%s%s| %s\n", cyan, namespace, def, message)
 }
 
 func ErrorLog(message string) {
-	Error.Printf("%s%s%s| %s\n", cyan, app, def, message)
+	Error.Printf("%s%s%s| %s\n", cyan, namespace, def, message)
 }

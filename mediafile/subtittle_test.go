@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestCreateSubtitle(t *testing.T) {
+func TestNewSubtitle(t *testing.T) {
 	cases := []struct {
 		BasicInfo
 		Exist bool
@@ -24,7 +24,7 @@ func TestCreateSubtitle(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		vid := CreateSubtitle(c.BasicInfo)
+		vid := NewSubtitle(c.BasicInfo)
 		if (vid != nil) != c.Exist {
 			t.Fatalf("Expected output to net exist")
 		}

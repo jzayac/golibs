@@ -13,7 +13,7 @@ type Subtitle struct {
 	Web bool
 }
 
-func CreateSubtitle(info BasicInfo) *Subtitle {
+func NewSubtitle(info BasicInfo) *Subtitle {
 	fileType := info.FileType
 	web, subs := supportedSubtitlesType[fileType]
 

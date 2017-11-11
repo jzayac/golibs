@@ -1,21 +1,35 @@
 package mediafile
 
 import (
-	"os"
-	"strings"
+	"fmt"
+
+	"videolib/dirutils"
 )
 
-type Direcotry struct {
-	Directories []*Direcotry
+type Directory struct {
+	Path        string
+	Directories []*Directory
 	Subtitles   []*Subtitle
 	Videos      []*Video
 }
 
-func (d Direcotry) HaveSubDirectory() bool {
+func (d Directory) GetDirectoryByPath(path string) *Directory {
+	fmt.Println(path)
+
+	return nil
+}
+
+func (d Directory) GetDirecoryName() string {
+	fmt.Println(d.Path)
+	fmt.Println(dirutils.GetParentDirName(d.Path))
+	return dirutils.GetParentDirName(d.Path)
+}
+
+func (d Directory) HaveSubDirectory() bool {
 	return len(d.Directories) > 0
 }
 
-func (d *Direcotry) SubDirHaveOnlySubtitles() bool {
+func (d *Directory) SubDirHaveOnlySubtitles() bool {
 	if !d.HaveSubDirectory() {
 		return false
 	}
@@ -32,20 +46,4 @@ func (d *Direcotry) SubDirHaveOnlySubtitles() bool {
 	}
 
 	return foundSubtitles
-}
-
-func getParentDirPath(path string) string {
-	sp := string(os.PathSeparator)
-	if strings.Count(path, sp) < 2 {
-		return sp
-	}
-	parrentDir := ""
-	index := strings.LastIndex(path, sp)
-
-	parrentDir = path[:index]
-
-	// index = strings.LastIndex(parrentDir, sp)
-	// parrentDir = parrentDir[index:]
-
-	return parrentDir
 }

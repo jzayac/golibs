@@ -36,7 +36,7 @@ func (v Video) GetVideoDbOptions() map[string]string {
 	}
 }
 
-func CreateVideo(info BasicInfo) *Video {
+func NewVideo(info BasicInfo) *Video {
 	fileType := info.FileType
 	web, val := supportedVideoType[fileType]
 

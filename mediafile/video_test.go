@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestCreateVideo(t *testing.T) {
+func TestNewVideo(t *testing.T) {
 	cases := []struct {
 		BasicInfo
 		Exist bool
@@ -20,7 +20,7 @@ func TestCreateVideo(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		vid := CreateVideo(c.BasicInfo)
+		vid := NewVideo(c.BasicInfo)
 		if (vid != nil) != c.Exist {
 			t.Fatalf("Expected output to net exist")
 		}

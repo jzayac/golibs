@@ -2,8 +2,9 @@ package mediafile
 
 import (
 	"os"
-	// "regexp"
 	"strings"
+
+	"videolib/dirutils"
 )
 
 type BasicInfo struct {
@@ -12,22 +13,12 @@ type BasicInfo struct {
 	FileType string
 }
 
-func (v BasicInfo) GetParrentDirName() string {
-	sp := string(os.PathSeparator)
-
-	parrentPathDir := getParentDirPath(v.Path)
-
-	if strings.Count(v.Path, sp) < 2 {
-		return sp
-	}
-	index := strings.LastIndex(parrentPathDir, sp)
-	parrentDirName := parrentPathDir[index+1:]
-
-	return parrentDirName
+func (v BasicInfo) GetDirName() string {
+	return dirutils.GetDirName(v.Path)
 }
 
 func (v *BasicInfo) ParseParentDirName() (string, bool) {
-	return getNameFromFolderName(v.GetParrentDirName())
+	return getNameFromFolderName(v.GetDirName())
 }
 
 func (v BasicInfo) GetYear() string {

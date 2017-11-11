@@ -72,7 +72,7 @@ func TestGetYear(t *testing.T) {
 	}
 }
 
-func TestGetParrentDirName(t *testing.T) {
+func TestGetDirName(t *testing.T) {
 	cases := []struct {
 		BasicInfo
 		expect string
@@ -92,7 +92,7 @@ func TestGetParrentDirName(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		name := c.GetParrentDirName()
+		name := c.GetDirName()
 		if name != c.expect {
 			t.Fatalf("Expected name to be %s but it was %s", c.expect, name)
 
