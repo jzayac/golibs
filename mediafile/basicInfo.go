@@ -4,7 +4,7 @@ import (
 	"os"
 	"strings"
 
-	"videolib/dirutils"
+	"videolib/fsutils"
 )
 
 type BasicInfo struct {
@@ -13,8 +13,16 @@ type BasicInfo struct {
 	FileType string
 }
 
+func (v BasicInfo) GetPath() string {
+	return v.Path
+}
+
+func (v BasicInfo) GetFileType() string {
+	return v.FileType
+}
+
 func (v BasicInfo) GetDirName() string {
-	return dirutils.GetDirName(v.Path)
+	return fsutils.GetDirName(v.Path)
 }
 
 func (v *BasicInfo) ParseParentDirName() (string, bool) {
@@ -29,7 +37,7 @@ func (v BasicInfo) GetYear() string {
 	return v.Name[idx : idx+4]
 }
 
-func createBasicInfo(fullPath string) *BasicInfo {
+func newBasicInfo(fullPath string) *BasicInfo {
 	sp := string(os.PathSeparator)
 	index := strings.LastIndex(fullPath, sp)
 	name := ""

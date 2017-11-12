@@ -21,7 +21,7 @@ func TestCreateBasicInfo(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		info := createBasicInfo(c.path)
+		info := newBasicInfo(c.path)
 		if !reflect.DeepEqual(*info, c.BasicInfo) {
 			t.Fatalf("Expected to be equal %+v :: %+v", info, c.BasicInfo)
 		}

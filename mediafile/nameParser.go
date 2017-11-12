@@ -36,7 +36,7 @@ func parseName(name string) string {
 	result = strings.Replace(result, ".", " ", -1)
 	result = strings.Replace(result, "-", " ", -1)
 
-	regexStr := `^([a-zA-Z]+\s*)`
+	regexStr := `^([a-zA-Z0-9]+\s*)`
 	if !yearFound {
 		regexStr = regexStr + `{1,4}`
 	} else {

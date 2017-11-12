@@ -1,11 +1,5 @@
 package mediafile
 
-import (
-	"fmt"
-
-	"videolib/dirutils"
-)
-
 type Directory struct {
 	Path        string
 	Directories []*Directory
@@ -13,16 +7,36 @@ type Directory struct {
 	Videos      []*Video
 }
 
-func (d Directory) GetDirectoryByPath(path string) *Directory {
-	fmt.Println(path)
+// func (d Directory) GetDirectoryByPath(path string) *Directory {
+// 	fmt.Println(path)
+// 	return nil
+// }
 
-	return nil
+// func (d Directory) GetParentDirecoryName() string {
+// 	return fsutils.GetParentDirName(d.Path)
+// }
+
+func (d Directory) VideoFileIsAlone() bool {
+	onlyOneVideo := d.OnlyOneVideoInDirectory()
+	haveSubdir := d.HaveSubDirectory()
+
+	if !onlyOneVideo {
+		return false
+	}
+
+	if !haveSubdir {
+		return true
+	}
+
+	if d.SubDirHaveOnlySubtitles() {
+		return true
+	}
+
+	return false
 }
 
-func (d Directory) GetDirecoryName() string {
-	fmt.Println(d.Path)
-	fmt.Println(dirutils.GetParentDirName(d.Path))
-	return dirutils.GetParentDirName(d.Path)
+func (d Directory) OnlyOneVideoInDirectory() bool {
+	return len(d.Videos) == 1
 }
 
 func (d Directory) HaveSubDirectory() bool {

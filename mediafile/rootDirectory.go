@@ -1,7 +1,7 @@
 package mediafile
 
 import (
-	"videolib/dirutils"
+	"videolib/fsutils"
 )
 
 // cannot have files in root dir.. only directories
@@ -17,10 +17,10 @@ func (r *RootDirectory) findDirByPathWithDependencies(path string) *Directory {
 	}
 	dirPath := ""
 
-	if dirutils.IsFile(path) {
-		dirPath = dirutils.GetDirPath(path)
+	if fsutils.IsFile(path) {
+		dirPath = fsutils.GetDirPath(path)
 	} else {
-		dirPath = dirutils.GetParentDirPath(path)
+		dirPath = fsutils.GetParentDirPath(path)
 	}
 
 	if dir, ok := r.DirMap[dirPath]; ok {
@@ -32,7 +32,27 @@ func (r *RootDirectory) findDirByPathWithDependencies(path string) *Directory {
 	subDir := createEmtpyDir(dirPath)
 	parentDir.Directories = append(parentDir.Directories, subDir)
 	r.DirMap[dirPath] = subDir
-	return parentDir
+	return subDir
+}
+
+func (r *RootDirectory) GetKeyPathsFromDirMap() []string {
+	keysLength := len(r.DirMap)
+	keys := make([]string, 0, keysLength)
+
+	for k := range r.DirMap {
+		keys = append(keys, k)
+	}
+	return keys
+}
+
+func (r *RootDirectory) GetDirectoryByKey(key string) (*Directory, bool) {
+	dir, ok := r.DirMap[key]
+	return dir, ok
+}
+
+func (r *RootDirectory) IsEmpty() bool {
+	// firs is root
+	return len(r.DirMap) <= 1
 }
 
 func NewRootDirectory() *RootDirectory {

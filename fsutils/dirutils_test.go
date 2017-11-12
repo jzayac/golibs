@@ -1,4 +1,4 @@
-package dirutils
+package fsutils
 
 import (
 	"testing"

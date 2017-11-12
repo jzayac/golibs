@@ -13,8 +13,9 @@ type Video struct {
 
 // interface for videoPlayer
 // need to refactor
-func (v Video) ParseName() string {
-	return v.GetName()
+func (v Video) ParsedName() string {
+	// return v.GetName()
+	return parseName(v.Name)
 }
 
 // interface for videoPlayer
@@ -34,6 +35,11 @@ func (v Video) GetVideoDbOptions() map[string]string {
 		"year":                 year,
 		"orimary_release_year": year,
 	}
+}
+
+func (v Video) ParseNameByDirName() (string, bool) {
+	str, found := getNameFromFolderName(v.GetDirName())
+	return str, found
 }
 
 func NewVideo(info BasicInfo) *Video {

@@ -1,8 +1,62 @@
 package mediafile
 
-// import (
-// 	"testing"
-// )
+import (
+	"testing"
+)
+
+func TestCreateMedia(t *testing.T) {
+	cases := []struct {
+		path  string
+		video bool
+		sub   bool
+		found bool
+	}{
+		{
+			path:  "/test/file.txt",
+			video: false,
+			sub:   false,
+			found: false,
+		},
+		{
+			path:  "/test/file.mp4",
+			video: true,
+			sub:   false,
+			found: true,
+		},
+		{
+			path:  "/test/file.srt",
+			video: false,
+			sub:   true,
+			found: true,
+		},
+	}
+
+	for _, c := range cases {
+		vid, sub, found := CreateMedia(c.path)
+		if (vid != nil) != c.video {
+			str := "exist"
+			if c.video == true {
+				str = "not exist"
+			}
+			t.Fatalf("Expected video to %s", str)
+		}
+		if (sub != nil) != c.sub {
+			str := "exist"
+			if c.sub == true {
+				str = "not exist"
+			}
+			t.Fatalf("Expected subtitles to %s", str)
+		}
+		if found != c.found {
+			str := "exist"
+			if c.found == true {
+				str = "not exist"
+			}
+			t.Fatalf("Expected entry to %s", str)
+		}
+
+	}
+}
 
 // // is this unit test?
 // func TestCreateMediaTree(t *testing.T) {
