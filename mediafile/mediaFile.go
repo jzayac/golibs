@@ -9,6 +9,16 @@ var l = logger.SetLogger("mediaFile")
 
 // TODO: path is valid
 
+func CreateVideo(fullPath string) (*Video, bool) {
+	info := newBasicInfo(fullPath)
+	if info == nil {
+		return nil, false
+	}
+
+	vid := NewVideo(*info)
+	return vid, true
+}
+
 func CreateMedia(fullPath string) (*Video, *Subtitle, bool) {
 	info := newBasicInfo(fullPath)
 	if info == nil {

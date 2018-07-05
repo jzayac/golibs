@@ -1,6 +1,7 @@
 package jsonconfig
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -40,4 +41,5 @@ func Load(p Parser) {
 	if err := p.ParseJSON(jsonBytes); err != nil {
 		log.Fatalln("Could not parse %q: %v", configFile, err)
 	}
+	fmt.Printf("%+v/n", p.ParseJSON(jsonBytes))
 }
