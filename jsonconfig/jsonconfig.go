@@ -1,7 +1,6 @@
 package jsonconfig
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -12,6 +11,7 @@ import (
 // Parser must implement ParseJSON
 type Parser interface {
 	ParseJSON([]byte) error
+	SetEnv(string)
 }
 
 // Load the JSON config file
@@ -19,10 +19,13 @@ type Parser interface {
 func Load(p Parser) {
 	var err error
 	var input = io.ReadCloser(os.Stdin)
-	enviroment := os.Getenv("PLAYER_APP")
+	enviroment := os.Getenv("GOLANG_ENV")
 	if enviroment != "DEVELOP" {
 		enviroment = "PROD"
 	}
+
+	p.SetEnv(enviroment)
+
 	enviroment = strings.ToLower(enviroment)
 	separator := string(os.PathSeparator)
 	configFile := "config" + separator + enviroment + separator + "config.json"
@@ -41,5 +44,4 @@ func Load(p Parser) {
 	if err := p.ParseJSON(jsonBytes); err != nil {
 		log.Fatalln("Could not parse %q: %v", configFile, err)
 	}
-	fmt.Printf("%+v/n", p.ParseJSON(jsonBytes))
 }

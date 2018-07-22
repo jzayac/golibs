@@ -51,7 +51,7 @@ func init() {
 	infoHandle := os.Stdout
 	warningHandle := os.Stdout
 	errorHandle := os.Stderr
-	if os.Getenv("GO_ENV") == "develop" || os.Getenv("GO_ENV") == "test" {
+	if os.Getenv("GOLANG_ENV") == "DEVELOP" || os.Getenv("GOLANG_ENV") == "TEST" {
 		// https://github.com/gopher-net/docker-ovs-plugin/blob/master/ovs/logging.go
 		debugHandle = os.Stdout
 	} else {

@@ -40,6 +40,29 @@ var (
 	}
 )
 
+type StatusOk struct {
+	Status string `json:"status"`
+}
+
+func JsonOkResponse(w http.ResponseWriter) {
+	ok := StatusOk{
+		Status: "OK",
+	}
+	json, err := json.Marshal(ok)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// w.WriteHeader(http.StatusOK)
+	// w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	// w.Write(json)
+	fmt.Fprintf(w, "%s", json)
+}
+
 func JsonResponse(response interface{}, w http.ResponseWriter) {
 	json, err := json.Marshal(response)
 	if err != nil {

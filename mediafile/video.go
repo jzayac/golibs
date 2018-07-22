@@ -1,14 +1,12 @@
 package mediafile
 
-var supportedVideoType = map[string]bool{
-	"mp4": true,
-	"avi": false,
-	"wmv": true,
-}
+import (
+	"videolib/fileTypes"
+)
 
 type Video struct {
 	BasicInfo
-	Web bool
+	// Web bool
 }
 
 // interface for videoPlayer
@@ -44,12 +42,12 @@ func (v Video) ParseNameByDirName() (string, bool) {
 
 func NewVideo(info BasicInfo) *Video {
 	fileType := info.FileType
-	web, val := supportedVideoType[fileType]
 
-	if !val {
+	if !fileTypes.IsVideoFileType(fileType) {
 		return nil
 	}
 
-	video := &Video{BasicInfo: info, Web: web}
+	// video := &Video{BasicInfo: info, Web: web}
+	video := &Video{BasicInfo: info}
 	return video
 }
