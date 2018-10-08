@@ -14,25 +14,25 @@ func IsFile(path string) bool {
 }
 
 // directory string end with path separator
-func GetDirPath(path string) string {
+func GetDirPath(fullPath string) string {
 	sp := string(os.PathSeparator)
-	if len(path) < 2 {
+	if len(fullPath) < 2 {
 		// todo: should i log error if is empty string
 		return sp
 	}
 
-	if IsFile(path) == false {
-		return path
+	if IsFile(fullPath) == false {
+		return fullPath
 	}
 
-	index := strings.LastIndex(path, sp)
-	dirPath := path[:index+1]
+	index := strings.LastIndex(fullPath, sp)
+	dirPath := fullPath[:index+1]
 	return dirPath
 }
 
-func GetDirName(path string) string {
+func GetDirName(fullPath string) string {
 	sp := string(os.PathSeparator)
-	dirPath := GetDirPath(path)
+	dirPath := GetDirPath(fullPath)
 	dirPath = dirPath[:len(dirPath)-1]
 
 	if len(dirPath) < 2 {

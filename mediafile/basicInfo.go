@@ -1,7 +1,6 @@
 package mediafile
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
@@ -40,7 +39,6 @@ func (v BasicInfo) GetYear() string {
 
 func newBasicInfo(fullPath string) *BasicInfo {
 	sp := string(os.PathSeparator)
-	fmt.Println("KOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO1")
 	index := strings.LastIndex(fullPath, sp)
 	name := ""
 
@@ -48,25 +46,15 @@ func newBasicInfo(fullPath string) *BasicInfo {
 		name = fullPath[index+1:]
 	}
 
-	fmt.Println("KOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO2")
 	index = strings.LastIndex(name, ".")
 	if index == -1 {
 		return nil
 	}
 
-	fmt.Println("KOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO3")
 	info := &BasicInfo{}
 	info.Name = name[0:index]
 	info.FileType = name[index+1:]
 	info.Path = fullPath
 
-	fmt.Println("KOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-	fmt.Printf("%s\n", "CHUJUUUUUUUUUUUUUUUUU")
-	fmt.Printf("%s\n", "picaaaaaaaaaaaaaaaaaaaaa")
-	fmt.Printf("%+v\n", info)
-	fmt.Printf("%+v\n", info)
-	fmt.Printf("%+v\n", info)
-
-	fmt.Println("KOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
 	return info
 }

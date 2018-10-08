@@ -8,7 +8,7 @@ var (
 	}
 	webTypes               = []string{"mp4"}
 	SupportedSubtitleTypes = []string{
-		"sub", "srt", "stl", "ts", "ttml", "vtt",
+		"srt", "ssa", "stl", "ttml", "vtt",
 	}
 )
 

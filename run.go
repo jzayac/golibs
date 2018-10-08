@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"videolib/mediafile"
+	// "videolib/mediafile"
 )
 
 func main() {
@@ -23,10 +23,10 @@ func main() {
 	// vid, sub, _ = mediafile.CreateMedia("/test/movie.srt")
 	// fmt.Printf("video :%+v   subs: : %+v\n", vid, sub)
 
-	mockData := []string{"/movie/rambo.mp4", "/movie/rit.srt", "/movie/rambo.mp4", "/movie/rit.srt"}
-	movies, subtitles := mediafile.CreateSliceOfMediaFiles(mockData)
-	fmt.Printf("%+v\n", movies)
-	fmt.Printf("%+v\n", subtitles)
+	// mockData := []string{"/movie/rambo.mp4", "/movie/rit.srt", "/movie/rambo.mp4", "/movie/rit.srt"}
+	// movies, subtitles := mediafile.CreateSliceOfMediaFiles(mockData)
+	// fmt.Printf("%+v\n", movies)
+	// fmt.Printf("%+v\n", subtitles)
 
 	// fmt.Printf("video :%+v   subs: : %+v\n", vid, sub)
 	fmt.Println("vim-go")

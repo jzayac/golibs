@@ -26,26 +26,45 @@ import (
 // http://kodi.wiki/view/Naming_video_files/Movies
 // https://support.plex.tv/hc/en-us/articles/200288586-Installation
 func parseName(name string) string {
-	yearFound := false
+	// yearFound := false
+
+	// fmt.Println("ORIGINAL NAME " + name)
+	name = strings.ToLower(name)
 	if idx := findYearIndexFromString(name, false); idx != -1 {
-		yearFound = true
+		// yearFound = true
+		if idx > 4 {
+			name = name[:idx-1]
+		}
+	}
+
+	if idx := strings.Index(name, "bluray"); idx != -1 {
 		name = name[:idx]
 	}
-	re := regexp.MustCompile(`(<[\w|\d|\s]*>)|(\[[\w|\d|\s]*\])`)
+
+	re := regexp.MustCompile(`(<.*>)|(\(.*\))|(\[.*\])`)
 	result := re.ReplaceAllLiteralString(name, "")
 	result = strings.Replace(result, ".", " ", -1)
 	result = strings.Replace(result, "-", " ", -1)
 
-	regexStr := `^([a-zA-Z0-9]+\s*)`
-	if !yearFound {
-		regexStr = regexStr + `{1,4}`
-	} else {
-		regexStr = regexStr + `{1,}`
-	}
+	result = strings.Replace(result, "720p", " ", -1)
+	result = strings.Replace(result, "1080p", " ", -1)
+
+	// fmt.Println("REPLACE " + result)
+
+	// regexStr := `^([a-zA-Z0-9][^720p|1080p]+\s*)`
+	regexStr := `([a-z0-9]+\s*)`
+	// regexStr := `^([a-zA-Z0-9][^720p]+\s*)`
+	// if !yearFound {
+	// 	// 	regexStr = regexStr + `{1,4}`
+	// 	// } else {
+	// 	// regexStr = regexStr + `{1,}`
+	// }
+
+	regexStr = regexStr + `{1,}`
 
 	re = regexp.MustCompile(regexStr)
 	result = re.FindString(result)
-	result = strings.ToLower(result)
+	// result = strings.ToLower(result)
 	return strings.Trim(result, " ")
 }
 

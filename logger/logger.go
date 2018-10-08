@@ -27,7 +27,7 @@ type Logger struct {
 }
 
 func (l *Logger) Debug(message, method string) {
-	Debug.Printf("%s%s:%s%s| %s", cyan, l.namespace, method, def, message)
+	Debug.Printf("%s%s:%s%s| %s\n", cyan, l.namespace, method, def, message)
 }
 
 func (l *Logger) Info(message, method string) {
