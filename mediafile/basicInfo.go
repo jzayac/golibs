@@ -4,7 +4,7 @@ import (
 	"os"
 	"strings"
 
-	"videolib/fsutils"
+	"github.com/jzayac/golibs/fsutils"
 )
 
 type BasicInfo struct {

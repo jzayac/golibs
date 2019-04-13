@@ -2,7 +2,7 @@ package mediafile
 
 import (
 	"fmt"
-	"videolib/logger"
+	"github.com/jzayac/golibs/logger"
 )
 
 var l = logger.SetLogger("mediaFile")

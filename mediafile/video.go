@@ -1,7 +1,7 @@
 package mediafile
 
 import (
-	"videolib/fileTypes"
+	"github.com/jzayac/golibs/fileTypes"
 )
 
 type Video struct {

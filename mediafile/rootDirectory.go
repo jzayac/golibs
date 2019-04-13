@@ -1,7 +1,7 @@
 package mediafile
 
 import (
-	"videolib/fsutils"
+	"github.com/jzayac/golibs/fsutils"
 )
 
 // cannot have files in root dir.. only directories

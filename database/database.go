@@ -1,14 +1,16 @@
 package database
 
 import (
+	"errors"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"videolib/logger"
+	// "videolib/logger"
 )
 
 var (
 	db Info
-	l  = logger.SetLogger("database")
+	// l  = logger.SetLogger("database")
 )
 
 // Info contains the database configurations
@@ -20,7 +22,8 @@ type Info struct {
 func Connect() (*gorm.DB, error) {
 	con, err := gorm.Open(db.TypeDb, db.Path)
 	if err != nil {
-		logger.Error.Println("Connect| sql connection problem", err)
+		// logger.Error.Println("Connect| sql connection problem", err)
+		return nil, ErrSqlConnectionProblem
 	}
 	return con, err
 }
@@ -31,12 +34,13 @@ func Initialize(d Info) error {
 	// Connect to sqlite
 	con, err := gorm.Open(d.TypeDb, d.Path)
 	if err != nil {
-		logger.Error.Println("Initialize| Sqlite Drive Error", err)
-		return err
+		// logger.Error.Println("Initialize| Sqlite Drive Error", err)
+		// return err
+		return ErrSqlInitDbDriver
 	}
 	con.Close()
 
-	l.Debug("db connection established", "Initialize")
+	// l.Debug("db connection established", "Initialize")
 	db = d
 
 	return nil
@@ -46,3 +50,6 @@ func Initialize(d Info) error {
 func ReadConfig() Info {
 	return db
 }
+
+var ErrSqlConnectionProblem = errors.New("Connect| sql connection problem")
+var ErrSqlInitDbDriver = errors.New("Initialize| Sqlite Drive Error")
