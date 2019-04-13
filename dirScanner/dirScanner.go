@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"videolib/logger"
+	"github.com/jzayac/golibs/logger"
 )
 
 func init() {
