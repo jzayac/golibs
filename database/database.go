@@ -2,15 +2,10 @@ package database
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	// "videolib/logger"
-)
-
-var (
-	db Info
-	// l  = logger.SetLogger("database")
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Info contains the database configurations
@@ -19,37 +14,38 @@ type Info struct {
 	Path   string
 }
 
-func Connect() (*gorm.DB, error) {
-	con, err := gorm.Open(db.TypeDb, db.Path)
-	if err != nil {
-		// logger.Error.Println("Connect| sql connection problem", err)
-		return nil, ErrSqlConnectionProblem
-	}
-	return con, err
+type databaseService struct {
+	db        Info
+	isDevelop bool
 }
 
-// Connect to the database
-func Initialize(d Info) error {
+func (ds databaseService) Connect() (*gorm.DB, error) {
+	dbinst, err := gorm.Open(ds.db.TypeDb, ds.db.Path)
 
-	// Connect to sqlite
+	if err != nil {
+		return nil, ErrSqlConnectionProblem
+	}
+
+	if ds.isDevelop {
+		return dbinst.Debug(), err
+	}
+
+	return dbinst, err
+}
+
+func NewDatabaseService(d Info, dbname string, develop bool) (*databaseService, error) {
+	d.Path = strings.Replace(d.Path, "::dbname::", dbname, 1)
 	con, err := gorm.Open(d.TypeDb, d.Path)
 	if err != nil {
-		// logger.Error.Println("Initialize| Sqlite Drive Error", err)
-		// return err
-		return ErrSqlInitDbDriver
+		return nil, ErrSqlInitDbDriver
 	}
 	con.Close()
 
-	// l.Debug("db connection established", "Initialize")
-	db = d
-
-	return nil
-}
-
-// ReadConfig returns the database information
-func ReadConfig() Info {
-	return db
+	return &databaseService{
+		db:        d,
+		isDevelop: develop,
+	}, nil
 }
 
 var ErrSqlConnectionProblem = errors.New("Connect| sql connection problem")
-var ErrSqlInitDbDriver = errors.New("Initialize| Sqlite Drive Error")
+var ErrSqlInitDbDriver = errors.New("Initialize| PG Drive Error")

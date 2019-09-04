@@ -28,7 +28,7 @@ func Load(p Parser) {
 
 	enviroment = strings.ToLower(enviroment)
 	separator := string(os.PathSeparator)
-	configFile := "config" + separator + enviroment + separator + "config.json"
+	configFile := "_config" + separator + enviroment + separator + "config.json"
 	if input, err = os.Open(configFile); err != nil {
 		log.Fatalln(err)
 	}
